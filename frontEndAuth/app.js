@@ -5,7 +5,7 @@ loginForm.addEventListener("submit", handleLogin)
 getUsersButton.addEventListener("click", handleGetUsers)
 
 function handleLogin(event) {
-  event.preventDefault()
+  // event.preventDefault()
   const loginFormData = new FormData(event.target)
 
   const username = loginFormData.get("username")
@@ -19,13 +19,14 @@ function handleLogin(event) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(loginBody),
-  }).then((response) => response.json())
-    .then(result => {
+  })
+    .then((response) => response.json())
+    .then((result) => {
       console.log(result.token)
       localStorage.setItem("token", result.token)
       // localStorage.setItem takes a key ("token") and value (result.token) to
       // store it in localStorage. You can view this in DevTools by going to the
-      // "Application" tab and then clicking on "Local Storage" in the sidebar. 
+      // "Application" tab and then clicking on "Local Storage" in the sidebar.
     })
 
   event.target.reset()
@@ -34,9 +35,9 @@ function handleLogin(event) {
 function handleGetUsers() {
   fetch("http://localhost:3000/users", {
     headers: {
-      "Authorization": `Bearer ${localStorage.token}`
-    }
+      Authorization: `Bearer ${localStorage.token}`,
+    },
   })
-    .then(response => response.json())
+    .then((response) => response.json())
     .then(console.log)
 }
